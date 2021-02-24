@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>admin page</title>
+</head>
+<body>
+<h1>Admin
+<td th:text="${name}"></td>
+</h1>
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>password</th>
+        <th>role</th>
+        <th>edit</th>
+        <th>remove</th>
+    </tr>
+    <tr th:each="user, state: ${userList}">
+        <td th:utext="${user.id}">id</td>
+        <td th:utext="${user.name}">name</td>
+        <td th:utext="${user.password}">password</td>
+        <td th:utext="${user.roles}">role</td>
+        <td><a th:href="@{/admin/{id}/Edit(id=${user.id})}">edit</a></td>
+        <td><a th:href="@{/admin/Remove/{id}(id=${user.id})}">remove</a></td>
+    </tr>
+</table>
+<br/>
+<h1>Add user</h1>
+<form th:action="@{/admin}" th:method="POST" th:object="${user}">
+    <label for="name">Enter name:</label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br/>
+    <label for="last name">Enter password:</label>
+    <input type="text" th:field="*{password}" id="last name"/>
+    <br/>
+        <select th:field="*{roles}">
+            <option value="">Select roles</option>
+            <option th:value="ROLE_ADMIN">ADMIN</option>
+            <option th:value="ROLE_USER">USER</option>
+        </select>
+    <br/>
+    <input type="submit" value="Create"/>
+</form>
+<br/>
+<br/>
+<a th:href="@{/logout}">Logout</a>
+<br/>
+<br/>
+<a th:href="@{/user}">Go to your user page</a>
+</body>
+</html>
