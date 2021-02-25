@@ -14,8 +14,6 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private Map<String, User> userMap;
-
     @Override
     public User getUserByName(String name) {
         User user = entityManager.createQuery("select user from User user where user.name = :username", User.class).setParameter("username", name).getSingleResult();
