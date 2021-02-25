@@ -36,11 +36,12 @@
     <label for="last name">Enter password:</label>
     <input type="text" th:field="*{password}" id="last name"/>
     <br/>
-        <select th:field="*{roles}">
-            <option value="">Select roles</option>
-            <option th:value="ROLE_ADMIN">ADMIN</option>
-            <option th:value="ROLE_USER">USER</option>
-        </select>
+    <ul>
+        <li th:each="role : ${roleList}">
+            <input type="checkbox" name="roles" th:field="*{roles}" th:value="${role}"
+                   th:text="${role}" />
+        </li>
+    </ul>
     <br/>
     <input type="submit" value="Create"/>
 </form>

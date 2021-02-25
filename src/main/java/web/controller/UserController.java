@@ -41,6 +41,10 @@ public class UserController {
 	@GetMapping("admin")
 	public String adminPage(Model model){
 		model.addAttribute("user", new User());
+		List<Role> roles = new ArrayList<>();
+		roles.add(new Role("ROLE_USER"));
+		roles.add(new Role("ROLE_ADMIN"));
+		model.addAttribute("roleList", roles);
 		model.addAttribute("userList", service.userList());
 		return "admin";
 	}
@@ -70,6 +74,10 @@ public class UserController {
 	@GetMapping(value = "/admin/{id}/Edit")
 	public String edit(@PathVariable("id") long id, Model model){
 		model.addAttribute("user", service.getUserById(id));
+		List<Role> roles = new ArrayList<>();
+		roles.add(new Role("ROLE_USER"));
+		roles.add(new Role("ROLE_ADMIN"));
+		model.addAttribute("roleList", roles);
 		model.addAttribute("userList", service.userList());
 		return "Edit";
 	}
