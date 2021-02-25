@@ -13,6 +13,7 @@ import web.service.UserService;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -63,7 +64,7 @@ public class UserController {
 	@GetMapping(value = "/admin/Remove/{id}")
 	public String remove(@PathVariable("id") long id){
 		service.deleteUser(id);
-		return "redirect:/admin/";
+		return "redirect:/admin";
 	}
 
 	@GetMapping(value = "/admin/{id}/Edit")
