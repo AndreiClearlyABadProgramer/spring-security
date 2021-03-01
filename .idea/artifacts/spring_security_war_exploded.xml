@@ -4,7 +4,7 @@
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="spring-security" />
+          <element id="module-output" name="springBOOT" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.3.3" />
@@ -51,7 +51,7 @@
           <element id="library" level="project" name="Maven: org.jetbrains:annotations:20.1.0" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="spring-security/web/Web" />
+      <element id="javaee-facet-resources" facet="springBOOT/web/Web" />
     </root>
   </artifact>
 </component>

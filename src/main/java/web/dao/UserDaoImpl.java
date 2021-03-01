@@ -1,5 +1,6 @@
 package web.dao;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import web.models.Role;
 import web.models.User;
@@ -14,26 +15,22 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private Map<String, User> userMap;
-
     @Override
     public User getUserByName(String name) {
         User user = entityManager.createQuery("select user from User user where user.name = :username", User.class).setParameter("username", name).getSingleResult();
+        Hibernate.initialize(user.getRoles());
         return user;
     }
 
     @Override
     public void addUser(User user) {
         entityManager.persist(user);
-
     }
 
     @Override
     public void deleteUser(long id) {
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
-        Role role = entityManager.find(Role.class, id);
-        entityManager.remove(role);
     }
 
     @Override
@@ -45,6 +42,9 @@ public class UserDaoImpl implements UserDao {
     public List<User> userList() {
         try {
             List<User> users = entityManager.createQuery("select user from User user").getResultList();
+            for(User i : users) {
+                Hibernate.initialize(i.getRoles());
+            }
             return users;
         }catch (NullPointerException e) {
             return new ArrayList<>();
@@ -54,6 +54,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserById(long id) {
         User user = entityManager.find(User.class, id);
+        Hibernate.initialize(user.getRoles());
         return user;
     }
 

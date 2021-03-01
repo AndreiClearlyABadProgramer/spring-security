@@ -13,6 +13,7 @@ import web.models.User;
 
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Autowired
