@@ -17,8 +17,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByName(String name) {
-        User user = entityManager.createQuery("select user from User user where user.name = :username", User.class).setParameter("username", name).getSingleResult();
-        Hibernate.initialize(user.getRoles());
+        User user = entityManager.createQuery("select user from User user join fetch user.roles where user.name = :username", User.class).setParameter("username", name).getSingleResult();
         return user;
     }
 
@@ -41,10 +40,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> userList() {
         try {
-            List<User> users = entityManager.createQuery("select user from User user").getResultList();
-            for(User i : users) {
-                Hibernate.initialize(i.getRoles());
-            }
+            List<User> users = entityManager.createQuery("select distinct user from User user join fetch user.roles order by user.id").getResultList();
             return users;
         }catch (NullPointerException e) {
             return new ArrayList<>();

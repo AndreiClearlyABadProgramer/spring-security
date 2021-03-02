@@ -4,18 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import web.models.Role;
 import web.models.User;
-import web.service.UserDetailsServiceImpl;
 import web.service.UserService;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -55,7 +51,7 @@ public class UserController {
 		return "redirect:/admin";
 	}
 
-	@GetMapping(value = "logout")
+	@GetMapping("logout")
 	public String logout(){
 		return "logout";
 	}
@@ -65,13 +61,13 @@ public class UserController {
 		return "redirect:/logout";
 	}
 
-	@GetMapping(value = "/admin/Remove/{id}")
+	@GetMapping("/admin/remove/{id}")
 	public String remove(@PathVariable("id") long id){
 		service.deleteUser(id);
 		return "redirect:/admin";
 	}
 
-	@GetMapping(value = "/admin/{id}/Edit")
+	@GetMapping("/admin/{id}/edit")
 	public String edit(@PathVariable("id") long id, Model model){
 		model.addAttribute("user", service.getUserById(id));
 		List<Role> roles = new ArrayList<>();
@@ -79,16 +75,16 @@ public class UserController {
 		roles.add(new Role("ROLE_ADMIN"));
 		model.addAttribute("roleList", roles);
 		model.addAttribute("userList", service.userList());
-		return "Edit";
+		return "edit";
 	}
 
-	@PatchMapping("/admin/{id}/Edit")
+	@PatchMapping("/admin/{id}/edit")
 	public String update(@ModelAttribute("User") User user, @PathVariable("id") long id){
 		service.updateUser(user);
 		return "redirect:/admin";
 	}
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @GetMapping("login")
     public String loginPage() {
         return "login";
     }
